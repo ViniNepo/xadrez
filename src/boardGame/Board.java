@@ -1,6 +1,7 @@
 package boardGame;
 
 import com.sun.xml.internal.stream.events.ProcessingInstructionEvent;
+import javafx.geometry.Pos;
 
 public class Board {
 
@@ -60,5 +61,19 @@ public class Board {
             throw new BoardExeption("Position not on the board");
 
         return piece(position) != null;
+    }
+
+    public Piece removePiece(Position position){
+        if(!positionExist(position))
+            throw new BoardExeption("Position not on the board");
+
+        if(piece(position) == null)
+            return null;
+
+        Piece aux = piece(position);
+        aux.position = null;
+
+        pieces[position.getRow()][position.getColumn()] = null;
+        return aux;
     }
 }
