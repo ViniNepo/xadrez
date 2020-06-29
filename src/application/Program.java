@@ -4,7 +4,7 @@ import boardGame.Board;
 import boardGame.Position;
 import chess.ChessMatch;
 
-public class program {
+public class Program {
 
     public static void main(String [] args) {
 
