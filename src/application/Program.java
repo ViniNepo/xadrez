@@ -23,12 +23,15 @@ public class Program {
                 System.out.print("initial position: ");
                 ChessPosition initial = UI.readChessPosition(sc);
 
+                boolean[][] possibleMoves = chessMatch.possibleMoves(initial);
+                UI.clearScreen();
+                UI.printBoard(chessMatch.getPieces(), possibleMoves);
+
                 System.out.println();
                 System.out.print("target: ");
                 ChessPosition target = UI.readChessPosition(sc);
 
                 ChessPiece capturePiece = chessMatch.performChessMove(initial, target);
-                System.out.println("fdghfjk");
             } catch (ChessExecpiton | InputMismatchException e) {
                 System.out.println(e.getMessage());
                 sc.nextLine();

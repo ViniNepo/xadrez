@@ -31,12 +31,18 @@ public class ChessMatch {
         board.placePiece(piece, new ChessPosition(column, row).toPosition());
     }
 
+    public boolean[][] possibleMoves(ChessPosition initialPosition) {
+        Position position = initialPosition.toPosition();
+        validateInitialPosition(position);
+        return board.piece(position).possibleMoves();
+    }
+
     public ChessPiece performChessMove(ChessPosition initial, ChessPosition target) {
         Position initialPosition = initial.toPosition();
         Position targetPosition = target.toPosition();
 
         validateInitialPosition(initialPosition);
-//        validateTargetPosition(initialPosition, targetPosition);
+        validateTargetPosition(initialPosition, targetPosition);
 
         Piece capturePiece = makeMove(initialPosition, targetPosition);
         return (ChessPiece)capturePiece;
