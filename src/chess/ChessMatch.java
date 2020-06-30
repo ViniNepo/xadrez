@@ -7,13 +7,31 @@ import boardGame.Position;
 import chess.pieces.King;
 import chess.pieces.Rook;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class ChessMatch {
 
     private Board board;
+    private int turn;
+    private Color currentPlayer;
+
+    private List<Piece> piecesOnTheBoard = new ArrayList<>();
+    private List<Piece> capturedPieces = new ArrayList<>();
 
     public ChessMatch() {
         board = new Board(8, 8);
+        turn = 1;
+        currentPlayer = Color.WHITE;
         initialSetup();
+    }
+
+    public Color getCurrentPlayer() {
+        return currentPlayer;
+    }
+
+    public int getTurn() {
+        return turn;
     }
 
     public ChessPiece[][] getPieces() {
@@ -29,6 +47,7 @@ public class ChessMatch {
 
     private void placeNewPiece(char column, int row, ChessPiece piece){
         board.placePiece(piece, new ChessPosition(column, row).toPosition());
+        piecesOnTheBoard.add(piece);
     }
 
     public boolean[][] possibleMoves(ChessPosition initialPosition) {
@@ -45,6 +64,7 @@ public class ChessMatch {
         validateTargetPosition(initialPosition, targetPosition);
 
         Piece capturePiece = makeMove(initialPosition, targetPosition);
+        nextTurn();
         return (ChessPiece)capturePiece;
     }
 
@@ -52,6 +72,11 @@ public class ChessMatch {
         Piece p = board.removePiece(initial);
         Piece capturePiece = board.removePiece(target);
         board.placePiece(p, target);
+
+        if (capturePiece != null) {
+            piecesOnTheBoard.remove(capturePiece);
+            capturedPieces.add(capturePiece);
+        }
         return  capturePiece;
     }
 
@@ -63,10 +88,16 @@ public class ChessMatch {
     private void validateInitialPosition(Position position) {
         if(!board.thereIsAPiece(position))
             throw new BoardExeption("There is no piece on initial position");
+        if (currentPlayer != ((ChessPiece)board.piece(position)).getColor())
+            throw new ChessExecpiton("The chosen piece is not yours");
         if(!board.piece(position).isTherePossibleMove())
             throw new ChessExecpiton("There in no moves for chosen piece");
     }
 
+    private void nextTurn() {
+        turn++;
+        currentPlayer = (currentPlayer == Color.WHITE) ? Color.BLACK : Color.WHITE;
+    }
 
     private void initialSetup() {
         placeNewPiece('c', 1, new Rook(board, Color.WHITE));
