@@ -28,10 +28,8 @@ public class Program {
                 ChessPosition target = UI.readChessPosition(sc);
 
                 ChessPiece capturePiece = chessMatch.performChessMove(initial, target);
-            } catch (ChessExecpiton e) {
-                System.out.println(e.getMessage());
-                sc.nextLine();
-            } catch (InputMismatchException e) {
+                System.out.println("fdghfjk");
+            } catch (ChessExecpiton | InputMismatchException e) {
                 System.out.println(e.getMessage());
                 sc.nextLine();
             }
