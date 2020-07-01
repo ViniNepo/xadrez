@@ -37,7 +37,6 @@ public class Pawn extends ChessPiece {
                 mat[p.getRow()][p.getColumn()] = true;
             }
         } else {
-            if(getColor() == Color.WHITE) {
                 p.setValues(position.getRow() + 1, position.getColumn());
                 if(getBoard().positionExist(p) && !getBoard().thereIsAPiece(p)) {
                     mat[p.getRow()][p.getColumn()] = true;
@@ -56,7 +55,6 @@ public class Pawn extends ChessPiece {
                 if(getBoard().positionExist(p) && isThereOppnentPiece(p)) {
                     mat[p.getRow()][p.getColumn()] = true;
                 }
-            }
         }
 
         return mat;
